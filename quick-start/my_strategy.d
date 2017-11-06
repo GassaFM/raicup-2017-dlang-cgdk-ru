@@ -222,7 +222,7 @@ private:
             if (!isNaN (oursX) && !isNaN (oursY))
             {
                 auto move1 = new Move ();
-                move1.action = ActionType.move;
+                move1.action = ActionType.rotate;
                 move1.x = oursX;
                 move1.y = oursY;
                 move1.angle = uniform (0, 2, random) ? +PI : -PI;
