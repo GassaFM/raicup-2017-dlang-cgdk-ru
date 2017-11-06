@@ -1,6 +1,6 @@
-# D language package for Russian AI Cup 2017: CodeXXX
+# D language package for Russian AI Cup 2017: CodeWars
 
-This package will be supported during the competition (until December ??, 2017)
+This package will be supported during the competition (until December 24, 2017)
 
 Translated from: Java CGDK (https://github.com/Russian-AI-Cup-2017/java-cgdk-en)
 

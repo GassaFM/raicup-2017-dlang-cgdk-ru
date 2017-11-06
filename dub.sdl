@@ -1,5 +1,5 @@
 name        "raicup-2017-dlang-cgdk-ru"
-description "D language package for Russian AI Cup 2017: CodeXXX"
+description "D language package for Russian AI Cup 2017: CodeWars"
 homepage    "https://github.com/GassaFM/raicup-2017-dlang-cgdk-ru"
 authors     "Ivan Kazmenko"
 license     "MIT"
