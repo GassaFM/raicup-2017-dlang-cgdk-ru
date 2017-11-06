@@ -1,0 +1,41 @@
+83,93c83,84
+< 
+<         this.terrainByCellXY = new TerrainType[terrainByCellXY.length] [];
+<         for (int x = terrainByCellXY.length; --x >= 0; ) {
+<             this.terrainByCellXY[x] = terrainByCellXY[x];
+<         }
+< 
+<         this.weatherByCellXY = new WeatherType[weatherByCellXY.length] [];
+<         for (int x = weatherByCellXY.length; --x >= 0; ) {
+<             this.weatherByCellXY[x] = weatherByCellXY[x];
+<         }
+< 
+---
+>         this.terrainByCellXY = terrainByCellXY;
+>         this.weatherByCellXY = weatherByCellXY;
+100c91
+<     Player getMyPlayer () const
+---
+>     immutable (Player) getMyPlayer ()
+102,106c93,94
+<         int playerIndex = players.length;
+< 
+<         while (--playerIndex >= 0) {
+<             Player player = players[playerIndex];
+<             if (player.isMe ()) {
+---
+>         foreach (player; players) {
+>             if (player.me) {
+117c105
+<     Player getOpponentPlayer () const
+---
+>     immutable (Player) getOpponentPlayer ()
+119,123c107,108
+<         int playerIndex = players.length;
+< 
+<         while (--playerIndex >= 0) {
+<             Player player = players[playerIndex];
+<             if (!player.isMe ()) {
+---
+>         foreach (player; players) {
+>             if (!player.me) {

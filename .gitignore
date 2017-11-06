@@ -1,0 +1,9 @@
+/java/
+/.dub/
+/dub.selections.json
+/MyStrategy
+/result.txt
+*.exe
+*.obj
+*.o
+*.log

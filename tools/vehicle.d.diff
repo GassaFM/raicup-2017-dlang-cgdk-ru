@@ -1,0 +1,20 @@
+158c158
+<         super (vehicle.getId (), vehicleUpdate.getX (), vehicleUpdate.getY (), vehicle.getRadius ());
+---
+>         super (vehicle.id, vehicleUpdate.x, vehicleUpdate.y, vehicle.radius);
+161c161
+<         this.durability = vehicleUpdate.getDurability ();
+---
+>         this.durability = vehicleUpdate.durability;
+175c175
+<         this.remainingAttackCooldownTicks = vehicleUpdate.getRemainingAttackCooldownTicks ();
+---
+>         this.remainingAttackCooldownTicks = vehicleUpdate.remainingAttackCooldownTicks;
+178,181c178,179
+<         this.selected = vehicleUpdate.isSelected ();
+< 
+<         int [] updateGroups = vehicleUpdate.getGroups ();
+<         this.groups = updateGroups;
+---
+>         this.selected = vehicleUpdate.selected;
+>         this.groups = vehicleUpdate.groups;

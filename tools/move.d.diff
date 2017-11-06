@@ -1,0 +1,52 @@
+10c10
+< immutable class Move
+---
+> class Move
+17c17
+<     ActionType action;
+---
+>     ActionType action = ActionType.unknown;
+31c31
+<     int group;
+---
+>     int group = 0;
+41c41
+<     double left;
+---
+>     double left = 0.0;
+51c51
+<     double top;
+---
+>     double top = 0.0;
+61c61
+<     double right;
+---
+>     double right = 0.0;
+71c71
+<     double bottom;
+---
+>     double bottom = 0.0;
+86c86
+<     double x;
+---
+>     double x = 0.0;
+101c101
+<     double y;
+---
+>     double y = 0.0;
+110c110
+<     double angle;
+---
+>     double angle = 0.0;
+121c121
+<     double maxSpeed;
+---
+>     double maxSpeed = 0.0;
+131c131
+<     double maxAngularSpeed;
+---
+>     double maxAngularSpeed = 0.0;
+144c144
+<     VehicleType vehicleType;
+---
+>     VehicleType vehicleType = VehicleType.unknown;

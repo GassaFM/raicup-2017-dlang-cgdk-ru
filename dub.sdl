@@ -1,0 +1,38 @@
+name        "raicup-2017-dlang-cgdk-ru"
+description "D language package for Russian AI Cup 2017: CodeXXX"
+homepage    "https://github.com/GassaFM/raicup-2017-dlang-cgdk-ru"
+authors     "Ivan Kazmenko"
+license     "MIT"
+
+configuration "application"
+
+//Use `dub -crun` to execute the local runner.
+configuration "run" {
+    //Change the next line to your local runner's working directory
+    //or pass it via an environment variable.
+    postBuildCommands \
+        "cd $LOCAL_RUNNER_HOME && local-runner.bat" \
+        "ping -n 3 127.0.0.1 >nul" /*sleep 2 (http://stackoverflow.com/a/1672349)*/ \
+        platform="windows"
+
+    postBuildCommands \
+        "cd $LOCAL_RUNNER_HOME && ./local-runner.sh" \
+        "sleep 2" \
+        platform="posix"
+}
+
+targetType     "executable"
+targetName     "MyStrategy"
+mainSourceFile "runner.d"
+sourcePaths    "."
+importPaths    "."
+excludedSourceFiles "tools/*"
+
+buildType "iodebug" {
+    buildOptions "debugMode" "debugInfo"
+    debugVersions "io"
+}
+
+buildType "release" {
+    buildOptions "noBoundsCheck" "releaseMode" "optimize" "inline"
+}

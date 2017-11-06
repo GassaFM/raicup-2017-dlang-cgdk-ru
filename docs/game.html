@@ -1,0 +1,3483 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>model.game</title>
+    <style type="text/css" media="screen">
+      html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
+      blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
+      img, ins, kbd, q, s, samp, small, strong, sub, sup, var, b, u, i, dl,
+      dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+      tbody, tfoot, thead, tr, th, td {
+        background: transparent none repeat scroll 0 0;
+        border: 0 none;
+        font-size: 100%;
+        margin: 0;
+        outline: 0 none;
+        padding: 0;
+        vertical-align: baseline;
+      }
+
+      .color_red { color: #dc322f; }
+      .color_blue { color: #268bd2; }
+      .color_green { color: #859901; }
+      .color_yellow { color: #b58901; }
+      .color_black { color: black; }
+      .color_white { color: white; }
+
+      .font_big {
+        font-size: 1.2em;
+      }
+
+      .ddoc_section_h {
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 19.5px;
+        margin-top: 11px;
+        display: block;
+      }
+
+      body.dlang .dlang {
+        display: inline-block;
+      }
+
+      body.dlang .declaration .dlang {
+          display: block;
+      }
+
+      body.dlang .ddoc_header_anchor a.dlang {
+        display: block;
+        color: rgba(0, 136, 204, 1);
+        text-decoration: none;
+      }
+
+      body.dlang .ddoc_header_anchor .code {
+        color: rgba(0, 136, 204, 1);
+      }
+
+      #ddoc_main .module {
+          border-color: currentColor rgba(233, 233, 233, 1) rgba(233, 233, 233, 1);
+          border-style: none solid solid;
+          border-width: 0 1px 1px;
+          overflow-x: hidden;
+          padding: 15px;
+      }
+
+      #ddoc_main .section .section {
+        margin-top: 0;
+      }
+
+      #ddoc_main .ddoc_module_members_section {
+          padding: 1px 0 0;
+          transition: transform 0.3s ease 0s;
+      }
+
+      #ddoc_main .ddoc_member, #ddoc_main .ddoc_module_members section.intro {
+          background: #fff none repeat scroll 0 0;
+          list-style-type: none;
+          width: 100%;
+      }
+
+      #ddoc_main .ddoc_header_anchor {
+          font-size: 1.4em;
+          transition: transform 0.3s ease 0s;
+      }
+
+      #ddoc_main .ddoc_header_anchor > .code {
+          display: inline-block;
+
+      }
+
+      #ddoc_main .ddoc_decl {
+        background-color: transparent;
+        height: 100%;
+        left: 0;
+        top: 0;
+        padding: 0;
+        padding-left: 15px;
+      }
+
+      #ddoc_main .ddoc_decl .section, #ddoc_main .section.ddoc_sections {
+        background: white none repeat scroll 0 0;
+        margin: 0;
+        padding: 5px;
+        position: relative;
+        border-radius: 5px;
+      }
+
+      #ddoc_main .ddoc_decl .section h4, #ddoc_main .section.ddoc_sections h4 {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 21px;
+      }
+
+      #ddoc_main .section .declaration {
+          margin-top: 21px;
+      }
+
+      #ddoc_main .section .declaration .code {
+          color: rgba(0, 0, 0, 1);
+          margin-bottom: 15px;
+          padding-bottom: 6px;
+      }
+
+      #ddoc_main .declaration div .para {
+          margin-bottom: 0;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr td:first-of-type {
+        padding: 7px;
+        text-align: right;
+        vertical-align: top;
+        word-break: normal;
+        white-space: nowrap;
+      }
+
+      #ddoc_main .ddoc_params .graybox {
+        border: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox td {
+        border-color: rgba(214, 214, 214, 1);
+      }
+
+      #ddoc_main .ddoc_params .graybox tr:first-child > td {
+        border-top: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr:last-child > td {
+        border-bottom: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr > td:first-child {
+        border-left: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr > td:last-child {
+        border-right: 0 none;
+        width: 100%;
+      }
+
+      #ddoc_main em.term, #ddoc_main em.term .code {
+        color: rgba(65, 65, 65, 1);
+        font-size: 12px;
+        font-style: italic;
+        line-height: 1.5;
+      }
+
+      #ddoc_main .see-also {
+        cursor: pointer;
+        font-family: Menlo,monospace;
+      }
+
+      #ddoc_main .ddoc_decl .section > div:last-of-type {
+        margin-bottom: 15px;
+      }
+
+      #ddoc_main .ddoc_member, #ddoc_main .ddoc_module_members {
+          transition: transform 0.3s ease 0s;
+      }
+
+      #ddoc_main .code_sample {
+        background: inherit;
+      }
+
+      #ddoc_main .declaration .code-line {
+          display: block;
+          font: 1em Menlo,monospace;
+      }
+
+      #ddoc_main a[name] {
+        margin: -112px 0 0;
+        padding-top: 112px;
+      }
+
+      #ddoc_main .ddoc_decl td {
+        max-width: inherit;
+      }
+
+      #ddoc_main .declaration a {
+        color: inherit;
+      }
+
+      #ddoc_main .declaration a:hover {
+          color: rgba(0, 136, 204, 1);
+          text-decoration: underline;
+      }
+
+      body.ddoc {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 1);
+        font-family: Helvetica,Arial,sans-serif;
+        font-size: 62.5%;
+        margin: 0;
+        border: 0;
+        left: 0;
+        top: 0;
+        padding: 0;
+      }
+
+      .ddoc a[name] {
+        display: block;
+        height: 0;
+        margin: -85px 0 0;
+        padding-top: 85px;
+        width: 0;
+      }
+
+      .ddoc .module {
+          border-color: transparent;
+          background-color: rgba(255, 255, 255, 1);
+          border-color: currentColor rgba(233, 233, 233, 1) rgba(233, 233, 233, 1);
+          border-image: none;
+          border-style: none solid solid;
+          border-width: 0 1px 1px;
+          box-shadow: 0 0 1px rgba(0, 0, 0, 0.07);
+          display: block;
+          margin-left: 0;
+          min-height: calc(100% - 173px);
+          overflow: auto;
+          padding-bottom: 100px;
+      }
+
+      .ddoc .content_wrapper {
+          background-color: rgba(242, 242, 242, 1);
+          margin: 0 auto;
+          max-width: 980px;
+      }
+
+      .ddoc .section {
+        padding: 15px 25px 30px;
+      }
+
+      .ddoc .section .section {
+        margin: 30px 0 0;
+        padding: 0;
+      }
+
+      .ddoc .para {
+        color: rgba(65, 65, 65, 1);
+        font-size: 1.4em;
+        line-height: 145%;
+        margin-bottom: 15px;
+      }
+
+      .ddoc .ddoc_examples .para {
+        margin-bottom: 0;
+      }
+
+      .ddoc .module_name {
+          color: rgba(0, 0, 0, 1);
+          display: block;
+          font-family: Helvetica;
+          font-size: 2.8em;
+          font-weight: 100;
+          margin-bottom: 0;
+          padding: 15px 0;
+      }
+
+      .ddoc .module a {
+          color: rgba(0, 136, 204, 1);
+          text-decoration: none;
+      }
+
+      .ddoc .code {
+        color: rgba(128, 128, 128, 1);
+        font-family: Menlo,monospace;
+        font-size: 0.85em;
+        word-wrap: break-word;
+      }
+
+      .ddoc .code i {
+        font-style: normal;
+      }
+
+      .ddoc .code .code {
+        font-size: 1em;
+      }
+
+      .ddoc .code_sample {
+        background-clip: padding-box;
+        margin: 1px 0;
+        text-align: left;
+      }
+
+      .ddoc .code_sample {
+        display: block;
+        font-size: 1.4em;
+        margin-left: 21px;
+      }
+
+      .ddoc ol .code_sample {
+        font-size: 1em;
+      }
+
+      .ddoc .code_lines {
+        counter-reset: li;
+        line-height: 1.6em;
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .ddoc .code_listing .code_sample div {
+        margin-left: 13px;
+        width: 93%;
+      }
+
+      .ddoc .code_listing .code_sample div .code_lines li {
+        list-style-type: none;
+        margin: 0;
+        padding-right: 10px;
+      }
+
+      .ddoc .code_sample div .code_lines li::before {
+        margin-left: -33px;
+        margin-right: 25px;
+      }
+
+      .ddoc .code_sample div .code_lines li:nth-child(n+10)::before {
+        margin-left: -39px;
+        margin-right: 25px;
+      }
+
+      .ddoc .code_sample div .code_lines li:nth-child(n+100)::before {
+        margin-left: -46px;
+        margin-right: 25px;
+      }
+
+      .ddoc .code_sample .code_lines .code {
+        color: #000;
+      }
+
+      .ddoc div.dlang {
+        margin: 10px 0 21px;
+        padding: 4px 0 2px 10px;
+      }
+
+      .ddoc div.dlang {
+          margin: 10px 0 21px;
+          padding: 4px 0 2px 10px;
+      }
+
+      .ddoc div.dlang {
+        border-left: 5px solid rgba(0, 155, 51, 0.2);
+      }
+
+      .ddoc .code_lines li::before {
+        color: rgba(128, 128, 128, 1);
+        content: counter(li, decimal);
+        counter-increment: li;
+        font-family: Menlo,monospace;
+        font-size: 0.9em;
+        margin-right: 16px;
+      }
+
+      .ddoc .code_lines li {
+        padding-left: 0;
+        white-space: pre-wrap;
+      }
+
+      .ddoc .code_lines li:only-of-type::before {
+        color: rgba(255, 255, 255, 1);
+        content: " ";
+      }
+
+      .ddoc .code_lines li:only-of-type {
+        color: rgba(255, 255, 255, 1);
+        content: " ";
+      }
+
+      .ddoc .code_lines li:nth-child(n+10) {
+        text-indent: -17px;
+      }
+
+      .ddoc .code_lines li:nth-child(n+10)::before {
+        margin-right: 12px;
+      }
+
+      .ddoc .graybox {
+        border: 1px solid rgba(233, 233, 233, 1);
+        border-collapse: collapse;
+        border-spacing: 0;
+        empty-cells: hide;
+        margin: 20px 0 36px;
+        text-align: left;
+      }
+
+      .ddoc .graybox p {
+        margin: 0;
+        min-width: 50px;
+      }
+
+      .ddoc td {
+        border: 1px solid rgba(233, 233, 233, 1);
+        margin: 0;
+        max-width: 260px;
+        padding: 5px 25px 5px 10px;
+        vertical-align: middle;
+      }
+
+      .punctuation {
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .comment {
+        color: rgba(0, 131, 18, 1);
+      }
+
+      .operator {
+        color: #000;
+      }
+
+      .keyword {
+        color: rgba(170, 13, 145, 1);
+      }
+
+      .keyword_type {
+        color: rgba(170, 51, 145, 1);
+      }
+
+      .string_literal {
+        color: rgba(196, 26, 22, 1);
+      }
+
+      .ddoc_psuper_symbol {
+        color: rgba(92, 38, 153, 1);
+      }
+
+      .param {
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .psymbol {
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .ddoc_member_header .ddoc_header_anchor .code {
+        font-size: 1em;
+      }
+    </style>
+  </head>
+  <body id="ddoc_main" class="ddoc dlang">
+    <div class="content_wrapper">
+      <article class="module">
+        <h1 class="module_name">model.game</h1>
+        <section id="module_content">
+<section class="section ddoc_module_members_section">
+  <div class="ddoc_module_members">
+    <ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game" id="Game"><code class="code">Game</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game"></span>class <code class="code">Game</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Предоставляет доступ к различным игровым константам.
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.randomSeed" id="Game.randomSeed"><code class="code">randomSeed</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.randomSeed"></span>immutable long <code class="code">randomSeed</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает некоторое число, которое ваша стратегия может использовать для инициализации генератора
+ случайных чисел. Данное значение имеет рекомендательный характер, однако позволит более точно воспроизводить
+ прошедшие игры.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tickCount" id="Game.tickCount"><code class="code">tickCount</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tickCount"></span>immutable int <code class="code">tickCount</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает базовую длительность игры в тиках. Реальная длительность может отличаться от этого значения в
+ меньшую сторону. Эквивалентно <code class="code">world.<code class="code">tickCount</code></code>.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.worldWidth" id="Game.worldWidth"><code class="code">worldWidth</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.worldWidth"></span>immutable double <code class="code">worldWidth</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает ширину карты.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.worldHeight" id="Game.worldHeight"><code class="code">worldHeight</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.worldHeight"></span>immutable double <code class="code">worldHeight</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает высоту карты.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fogOfWarEnabled" id="Game.fogOfWarEnabled"><code class="code">fogOfWarEnabled</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fogOfWarEnabled"></span>immutable bool <code class="code">fogOfWarEnabled</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает <code class="code">true</code>, если и только если в данной игре включен режим частичной видимости.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.victoryScore" id="Game.victoryScore"><code class="code">victoryScore</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.victoryScore"></span>immutable int <code class="code">victoryScore</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество баллов, получаемое игроком в случае уничтожения всех юнитов противника.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.facilityCaptureScore" id="Game.facilityCaptureScore"><code class="code">facilityCaptureScore</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.facilityCaptureScore"></span>immutable int <code class="code">facilityCaptureScore</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество баллов за захват сооружения.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.vehicleEliminationScore" id="Game.vehicleEliminationScore"><code class="code">vehicleEliminationScore</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.vehicleEliminationScore"></span>immutable int <code class="code">vehicleEliminationScore</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество баллов за уничтожение юнита противника.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.actionDetectionInterval" id="Game.actionDetectionInterval"><code class="code">actionDetectionInterval</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.actionDetectionInterval"></span>immutable int <code class="code">actionDetectionInterval</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает интервал, учитываемый в ограничении количества действий стратегии.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.baseActionCount" id="Game.baseActionCount"><code class="code">baseActionCount</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.baseActionCount"></span>immutable int <code class="code">baseActionCount</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает базовое количество действий, которое может совершить стратегия за
+ <code class="code">actionDetectionInterval</code> последовательных тиков.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.additionalActionCountPerControlCenter" id="Game.additionalActionCountPerControlCenter"><code class="code">additionalActionCountPerControlCenter</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.additionalActionCountPerControlCenter"></span>immutable int <code class="code">additionalActionCountPerControlCenter</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дополнительное количество действий за каждый захваченный центр управления
+ (<code class="code">FacilityType.controlCenter</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.maxUnitGroup" id="Game.maxUnitGroup"><code class="code">maxUnitGroup</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.maxUnitGroup"></span>immutable int <code class="code">maxUnitGroup</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимально возможный индекс группы юнитов.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.terrainWeatherMapColumnCount" id="Game.terrainWeatherMapColumnCount"><code class="code">terrainWeatherMapColumnCount</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.terrainWeatherMapColumnCount"></span>immutable int <code class="code">terrainWeatherMapColumnCount</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество столбцов в картах местности и погоды.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.terrainWeatherMapRowCount" id="Game.terrainWeatherMapRowCount"><code class="code">terrainWeatherMapRowCount</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.terrainWeatherMapRowCount"></span>immutable int <code class="code">terrainWeatherMapRowCount</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество строк в картах местности и погоды.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.plainTerrainVisionFactor" id="Game.plainTerrainVisionFactor"><code class="code">plainTerrainVisionFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.plainTerrainVisionFactor"></span>immutable double <code class="code">plainTerrainVisionFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора наземной техники, находящейся на равнинной местности
+ (<code class="code">TerrainType.plain</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.plainTerrainStealthFactor" id="Game.plainTerrainStealthFactor"><code class="code">plainTerrainStealthFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.plainTerrainStealthFactor"></span>immutable double <code class="code">plainTerrainStealthFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора любой техники при обнаружении наземной техники противника,
+ находящейся на равнинной местности (<code class="code">TerrainType.plain</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.plainTerrainSpeedFactor" id="Game.plainTerrainSpeedFactor"><code class="code">plainTerrainSpeedFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.plainTerrainSpeedFactor"></span>immutable double <code class="code">plainTerrainSpeedFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор максимальной скорости наземной техники, находящейся на равнинной местности
+ (<code class="code">TerrainType.plain</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.swampTerrainVisionFactor" id="Game.swampTerrainVisionFactor"><code class="code">swampTerrainVisionFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.swampTerrainVisionFactor"></span>immutable double <code class="code">swampTerrainVisionFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора наземной техники, находящейся в болотистой местности
+ (<code class="code">TerrainType.swamp</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.swampTerrainStealthFactor" id="Game.swampTerrainStealthFactor"><code class="code">swampTerrainStealthFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.swampTerrainStealthFactor"></span>immutable double <code class="code">swampTerrainStealthFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора любой техники при обнаружении наземной техники противника,
+ находящейся в болотистой местности (<code class="code">TerrainType.swamp</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.swampTerrainSpeedFactor" id="Game.swampTerrainSpeedFactor"><code class="code">swampTerrainSpeedFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.swampTerrainSpeedFactor"></span>immutable double <code class="code">swampTerrainSpeedFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор максимальной скорости наземной техники, находящейся в болотистой местности
+ (<code class="code">TerrainType.swamp</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.forestTerrainVisionFactor" id="Game.forestTerrainVisionFactor"><code class="code">forestTerrainVisionFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.forestTerrainVisionFactor"></span>immutable double <code class="code">forestTerrainVisionFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора наземной техники, находящейся в лесистой местности
+ (<code class="code">TerrainType.forest</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.forestTerrainStealthFactor" id="Game.forestTerrainStealthFactor"><code class="code">forestTerrainStealthFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.forestTerrainStealthFactor"></span>immutable double <code class="code">forestTerrainStealthFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора любой техники при обнаружении наземной техники противника,
+ находящейся в лесистой местности (<code class="code">TerrainType.forest</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.forestTerrainSpeedFactor" id="Game.forestTerrainSpeedFactor"><code class="code">forestTerrainSpeedFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.forestTerrainSpeedFactor"></span>immutable double <code class="code">forestTerrainSpeedFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор максимальной скорости наземной техники, находящейся в лесистой местности
+ (<code class="code">TerrainType.forest</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.clearWeatherVisionFactor" id="Game.clearWeatherVisionFactor"><code class="code">clearWeatherVisionFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.clearWeatherVisionFactor"></span>immutable double <code class="code">clearWeatherVisionFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора воздушной техники, находящейся в области ясной погоды
+ (<code class="code">WeatherType.clear</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.clearWeatherStealthFactor" id="Game.clearWeatherStealthFactor"><code class="code">clearWeatherStealthFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.clearWeatherStealthFactor"></span>immutable double <code class="code">clearWeatherStealthFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора любой техники при обнаружении воздушной техники противника,
+ находящейся в области ясной погоды (<code class="code">WeatherType.clear</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.clearWeatherSpeedFactor" id="Game.clearWeatherSpeedFactor"><code class="code">clearWeatherSpeedFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.clearWeatherSpeedFactor"></span>immutable double <code class="code">clearWeatherSpeedFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор максимальной скорости воздушной техники, находящейся в области ясной погоды
+ (<code class="code">WeatherType.clear</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.cloudWeatherVisionFactor" id="Game.cloudWeatherVisionFactor"><code class="code">cloudWeatherVisionFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.cloudWeatherVisionFactor"></span>immutable double <code class="code">cloudWeatherVisionFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора воздушной техники, находящейся в плотных облаках
+ (<code class="code">WeatherType.cloud</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.cloudWeatherStealthFactor" id="Game.cloudWeatherStealthFactor"><code class="code">cloudWeatherStealthFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.cloudWeatherStealthFactor"></span>immutable double <code class="code">cloudWeatherStealthFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора любой техники при обнаружении воздушной техники противника,
+ находящейся в плотных облаках (<code class="code">WeatherType.cloud</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.cloudWeatherSpeedFactor" id="Game.cloudWeatherSpeedFactor"><code class="code">cloudWeatherSpeedFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.cloudWeatherSpeedFactor"></span>immutable double <code class="code">cloudWeatherSpeedFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор максимальной скорости воздушной техники, находящейся в плотных облаках
+ (<code class="code">WeatherType.cloud</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.rainWeatherVisionFactor" id="Game.rainWeatherVisionFactor"><code class="code">rainWeatherVisionFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.rainWeatherVisionFactor"></span>immutable double <code class="code">rainWeatherVisionFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора воздушной техники, находящейся в условиях сильного дождя
+ (<code class="code">WeatherType.rain</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.rainWeatherStealthFactor" id="Game.rainWeatherStealthFactor"><code class="code">rainWeatherStealthFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.rainWeatherStealthFactor"></span>immutable double <code class="code">rainWeatherStealthFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор радиуса обзора любой техники при обнаружении воздушной техники противника,
+ находящейся в условиях сильного дождя (<code class="code">WeatherType.rain</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.rainWeatherSpeedFactor" id="Game.rainWeatherSpeedFactor"><code class="code">rainWeatherSpeedFactor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.rainWeatherSpeedFactor"></span>immutable double <code class="code">rainWeatherSpeedFactor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает мультипликатор максимальной скорости воздушной техники, находящейся в условиях сильного дождя
+ (<code class="code">WeatherType.rain</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.vehicleRadius" id="Game.vehicleRadius"><code class="code">vehicleRadius</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.vehicleRadius"></span>immutable double <code class="code">vehicleRadius</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает радиус техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankDurability" id="Game.tankDurability"><code class="code">tankDurability</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankDurability"></span>immutable int <code class="code">tankDurability</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную прочность танка.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankSpeed" id="Game.tankSpeed"><code class="code">tankSpeed</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankSpeed"></span>immutable double <code class="code">tankSpeed</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную скорость танка.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankVisionRange" id="Game.tankVisionRange"><code class="code">tankVisionRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankVisionRange"></span>immutable double <code class="code">tankVisionRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает базовый радиус обзора танка.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankGroundAttackRange" id="Game.tankGroundAttackRange"><code class="code">tankGroundAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankGroundAttackRange"></span>immutable double <code class="code">tankGroundAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки танка по наземным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankAerialAttackRange" id="Game.tankAerialAttackRange"><code class="code">tankAerialAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankAerialAttackRange"></span>immutable double <code class="code">tankAerialAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки танка по воздушным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankGroundDamage" id="Game.tankGroundDamage"><code class="code">tankGroundDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankGroundDamage"></span>immutable int <code class="code">tankGroundDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки танка по наземной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankAerialDamage" id="Game.tankAerialDamage"><code class="code">tankAerialDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankAerialDamage"></span>immutable int <code class="code">tankAerialDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки танка по воздушной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankGroundDefence" id="Game.tankGroundDefence"><code class="code">tankGroundDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankGroundDefence"></span>immutable int <code class="code">tankGroundDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту танка от атак наземной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankAerialDefence" id="Game.tankAerialDefence"><code class="code">tankAerialDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankAerialDefence"></span>immutable int <code class="code">tankAerialDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту танка от атак воздушной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankAttackCooldownTicks" id="Game.tankAttackCooldownTicks"><code class="code">tankAttackCooldownTicks</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankAttackCooldownTicks"></span>immutable int <code class="code">tankAttackCooldownTicks</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает интервал в тиках между двумя последовательными атаками танка.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.tankProductionCost" id="Game.tankProductionCost"><code class="code">tankProductionCost</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.tankProductionCost"></span>immutable int <code class="code">tankProductionCost</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество тиков, необхожимое для производства одного танка на заводе
+ (<code class="code">FacilityType.vehicleFactory</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvDurability" id="Game.ifvDurability"><code class="code">ifvDurability</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvDurability"></span>immutable int <code class="code">ifvDurability</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную прочность БМП.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvSpeed" id="Game.ifvSpeed"><code class="code">ifvSpeed</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvSpeed"></span>immutable double <code class="code">ifvSpeed</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную скорость БМП.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvVisionRange" id="Game.ifvVisionRange"><code class="code">ifvVisionRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvVisionRange"></span>immutable double <code class="code">ifvVisionRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает базовый радиус обзора БМП.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvGroundAttackRange" id="Game.ifvGroundAttackRange"><code class="code">ifvGroundAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvGroundAttackRange"></span>immutable double <code class="code">ifvGroundAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки БМП по наземным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvAerialAttackRange" id="Game.ifvAerialAttackRange"><code class="code">ifvAerialAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvAerialAttackRange"></span>immutable double <code class="code">ifvAerialAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки БМП по воздушным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvGroundDamage" id="Game.ifvGroundDamage"><code class="code">ifvGroundDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvGroundDamage"></span>immutable int <code class="code">ifvGroundDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки БМП по наземной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvAerialDamage" id="Game.ifvAerialDamage"><code class="code">ifvAerialDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvAerialDamage"></span>immutable int <code class="code">ifvAerialDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки БМП по воздушной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvGroundDefence" id="Game.ifvGroundDefence"><code class="code">ifvGroundDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvGroundDefence"></span>immutable int <code class="code">ifvGroundDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту БМП от атак наземной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvAerialDefence" id="Game.ifvAerialDefence"><code class="code">ifvAerialDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvAerialDefence"></span>immutable int <code class="code">ifvAerialDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту БМП от атак воздушной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvAttackCooldownTicks" id="Game.ifvAttackCooldownTicks"><code class="code">ifvAttackCooldownTicks</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvAttackCooldownTicks"></span>immutable int <code class="code">ifvAttackCooldownTicks</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает интервал в тиках между двумя последовательными атаками БМП.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.ifvProductionCost" id="Game.ifvProductionCost"><code class="code">ifvProductionCost</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.ifvProductionCost"></span>immutable int <code class="code">ifvProductionCost</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество тиков, необхожимое для производства одной БМП на заводе
+ (<code class="code">FacilityType.vehicleFactory</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvDurability" id="Game.arrvDurability"><code class="code">arrvDurability</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvDurability"></span>immutable int <code class="code">arrvDurability</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную прочность БРЭМ.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvSpeed" id="Game.arrvSpeed"><code class="code">arrvSpeed</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvSpeed"></span>immutable double <code class="code">arrvSpeed</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную скорость БРЭМ.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvVisionRange" id="Game.arrvVisionRange"><code class="code">arrvVisionRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvVisionRange"></span>immutable double <code class="code">arrvVisionRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает базовый радиус обзора БРЭМ.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvGroundDefence" id="Game.arrvGroundDefence"><code class="code">arrvGroundDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvGroundDefence"></span>immutable int <code class="code">arrvGroundDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту БРЭМ от атак наземной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvAerialDefence" id="Game.arrvAerialDefence"><code class="code">arrvAerialDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvAerialDefence"></span>immutable int <code class="code">arrvAerialDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту БРЭМ от атак воздушной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvProductionCost" id="Game.arrvProductionCost"><code class="code">arrvProductionCost</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvProductionCost"></span>immutable int <code class="code">arrvProductionCost</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество тиков, необхожимое для производства одной БРЭМ на заводе
+ (<code class="code">FacilityType.vehicleFactory</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvRepairRange" id="Game.arrvRepairRange"><code class="code">arrvRepairRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvRepairRange"></span>immutable double <code class="code">arrvRepairRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальное расстояние (от центра до центра), на котором БРЭМ может ремонтировать
+ дружественную технику.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.arrvRepairSpeed" id="Game.arrvRepairSpeed"><code class="code">arrvRepairSpeed</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.arrvRepairSpeed"></span>immutable double <code class="code">arrvRepairSpeed</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальное количество прочности, которое БРЭМ может восстановить дружественной технике за
+ один тик.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterDurability" id="Game.helicopterDurability"><code class="code">helicopterDurability</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterDurability"></span>immutable int <code class="code">helicopterDurability</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную прочность ударного вертолёта.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterSpeed" id="Game.helicopterSpeed"><code class="code">helicopterSpeed</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterSpeed"></span>immutable double <code class="code">helicopterSpeed</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную скорость ударного вертолёта.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterVisionRange" id="Game.helicopterVisionRange"><code class="code">helicopterVisionRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterVisionRange"></span>immutable double <code class="code">helicopterVisionRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает базовый радиус обзора ударного вертолёта.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterGroundAttackRange" id="Game.helicopterGroundAttackRange"><code class="code">helicopterGroundAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterGroundAttackRange"></span>immutable double <code class="code">helicopterGroundAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки ударного вертолёта по наземным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterAerialAttackRange" id="Game.helicopterAerialAttackRange"><code class="code">helicopterAerialAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterAerialAttackRange"></span>immutable double <code class="code">helicopterAerialAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки ударного вертолёта по воздушным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterGroundDamage" id="Game.helicopterGroundDamage"><code class="code">helicopterGroundDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterGroundDamage"></span>immutable int <code class="code">helicopterGroundDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки ударного вертолёта по наземной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterAerialDamage" id="Game.helicopterAerialDamage"><code class="code">helicopterAerialDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterAerialDamage"></span>immutable int <code class="code">helicopterAerialDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки ударного вертолёта по воздушной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterGroundDefence" id="Game.helicopterGroundDefence"><code class="code">helicopterGroundDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterGroundDefence"></span>immutable int <code class="code">helicopterGroundDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту ударного вертолёта от атак наземной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterAerialDefence" id="Game.helicopterAerialDefence"><code class="code">helicopterAerialDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterAerialDefence"></span>immutable int <code class="code">helicopterAerialDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту ударного вертолёта от атак воздушной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterAttackCooldownTicks" id="Game.helicopterAttackCooldownTicks"><code class="code">helicopterAttackCooldownTicks</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterAttackCooldownTicks"></span>immutable int <code class="code">helicopterAttackCooldownTicks</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает интервал в тиках между двумя последовательными атаками ударного вертолёта.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.helicopterProductionCost" id="Game.helicopterProductionCost"><code class="code">helicopterProductionCost</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.helicopterProductionCost"></span>immutable int <code class="code">helicopterProductionCost</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество тиков, необхожимое для производства одного ударного вертолёта на заводе
+ (<code class="code">FacilityType.vehicleFactory</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterDurability" id="Game.fighterDurability"><code class="code">fighterDurability</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterDurability"></span>immutable int <code class="code">fighterDurability</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную прочность истребителя.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterSpeed" id="Game.fighterSpeed"><code class="code">fighterSpeed</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterSpeed"></span>immutable double <code class="code">fighterSpeed</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимальную скорость истребителя.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterVisionRange" id="Game.fighterVisionRange"><code class="code">fighterVisionRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterVisionRange"></span>immutable double <code class="code">fighterVisionRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает базовый радиус обзора истребителя.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterGroundAttackRange" id="Game.fighterGroundAttackRange"><code class="code">fighterGroundAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterGroundAttackRange"></span>immutable double <code class="code">fighterGroundAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки истребителя по наземным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterAerialAttackRange" id="Game.fighterAerialAttackRange"><code class="code">fighterAerialAttackRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterAerialAttackRange"></span>immutable double <code class="code">fighterAerialAttackRange</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает дальность атаки истребителя по воздушным целям.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterGroundDamage" id="Game.fighterGroundDamage"><code class="code">fighterGroundDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterGroundDamage"></span>immutable int <code class="code">fighterGroundDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки истребителя по наземной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterAerialDamage" id="Game.fighterAerialDamage"><code class="code">fighterAerialDamage</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterAerialDamage"></span>immutable int <code class="code">fighterAerialDamage</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает урон одной атаки истребителя по воздушной технике.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterGroundDefence" id="Game.fighterGroundDefence"><code class="code">fighterGroundDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterGroundDefence"></span>immutable int <code class="code">fighterGroundDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту истребителя от атак наземной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterAerialDefence" id="Game.fighterAerialDefence"><code class="code">fighterAerialDefence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterAerialDefence"></span>immutable int <code class="code">fighterAerialDefence</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает защиту истребителя от атак воздушной техники.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterAttackCooldownTicks" id="Game.fighterAttackCooldownTicks"><code class="code">fighterAttackCooldownTicks</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterAttackCooldownTicks"></span>immutable int <code class="code">fighterAttackCooldownTicks</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает интервал в тиках между двумя последовательными атаками истребителя.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.fighterProductionCost" id="Game.fighterProductionCost"><code class="code">fighterProductionCost</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.fighterProductionCost"></span>immutable int <code class="code">fighterProductionCost</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает количество тиков, необхожимое для производства одного истребителя на заводе
+ (<code class="code">FacilityType.vehicleFactory</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.maxFacilityCapturePoints" id="Game.maxFacilityCapturePoints"><code class="code">maxFacilityCapturePoints</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.maxFacilityCapturePoints"></span>immutable double <code class="code">maxFacilityCapturePoints</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает максимально возможную абсолютную величину индикатора захвата сооружения
+ (<code class="code">facility.capturePoints</code>).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.facilityCapturePointsPerVehiclePerTick" id="Game.facilityCapturePointsPerVehiclePerTick"><code class="code">facilityCapturePointsPerVehiclePerTick</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.facilityCapturePointsPerVehiclePerTick"></span>immutable double <code class="code">facilityCapturePointsPerVehiclePerTick</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает скорость изменения индикатора захвата сооружения (<code class="code">facility.capturePoints</code>) за каждую
+ единицу техники, центр которой находится внутри сооружения.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.facilityWidth" id="Game.facilityWidth"><code class="code">facilityWidth</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.facilityWidth"></span>immutable double <code class="code">facilityWidth</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает ширину сооружения.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Game.facilityHeight" id="Game.facilityHeight"><code class="code">facilityHeight</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Game.facilityHeight"></span>immutable double <code class="code">facilityHeight</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Возвращает высоту сооружения.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li>
+</ul>
+  </div>
+</section>
+</section>
+      </article>
+    </div>
+  </body>
+</html>
