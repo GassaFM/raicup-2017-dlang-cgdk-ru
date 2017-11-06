@@ -169,7 +169,18 @@ private:
 
         static if (is (Unqual !(T) == World))
         { // custom read: World has caching for some member arrays
-            mixin (ReadContents !(T));
+//            pragma (msg, ReadContents !(T));
+            mixin (ReadContents !(T)
+                .replace ("auto terrainByCellXY = " ~
+                "read !(immutable(TerrainType[][])) ();\n",
+                "if (terrainType2DArrayCache is null) {" ~
+                "terrainType2DArrayCache = " ~
+                "read !(immutable(TerrainType[][])) ();}\n")
+                .replace ("auto weatherByCellXY = " ~
+                "read !(immutable(WeatherType[][])) ();\n",
+                "if (weatherType2DArrayCache is null) {" ~
+                "weatherType2DArrayCache = " ~
+                "read !(immutable(WeatherType[][])) ();}\n"));
 
             if (players !is null)
             {
@@ -178,14 +189,6 @@ private:
             if (facilities !is null)
             {
                 facilitiesArrayCache = rebindable (facilities);
-            }
-            if (terrainByCellXY !is null)
-            {
-                terrainType2DArrayCache = rebindable (terrainByCellXY);
-            }
-            if (weatherByCellXY !is null)
-            {
-                weatherType2DArrayCache = rebindable (weatherByCellXY);
             }
 
             return mixin (CallConstructor !(T)
@@ -301,7 +304,7 @@ private:
 
     auto read (T : T []) ()
     {
-        debug (io) {writeln ("array read");}
+        debug (io) {writeln ("reading array of ", T.stringof); stdout.flush;}
         int len = read !(int) ();
         if (len < 0)
         {
