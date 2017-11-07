@@ -20,10 +20,11 @@ final class MyStrategy : Strategy
      * Main strategy method, controlling the vehicles.
      * The game engine calls this method once each time tick.
      *
-     * @param me    the owner player of this strategy.
-     * @param world the current world snapshot.
-     * @param game  many game constants.
-     * @param move  the object that encapsulates all strategy instructions.
+     * Params:
+     *   me    = the owner player of this strategy.
+     *   world = the current world snapshot.
+     *   game  = many game constants.
+     *   move  = the object that encapsulates all strategy instructions.
      */
     void move (immutable Player me, immutable World world,
         immutable Game game, Move move)
@@ -160,8 +161,8 @@ private:
                 auto goalList = vehicles.filter !(v =>
                     v.playerId != me.id && v.type == goalType);
                 auto goalN = goalList.walkLength;
-                double goalX = goalN ? goalList.map !(v => v.x).sum / goalN : double.nan;
-                double goalY = goalN ? goalList.map !(v => v.y).sum / goalN : double.nan;
+                double goalX = goalN ? goalList.map !(v => v.x).sum / goalN : world.width / 2.0;
+                double goalY = goalN ? goalList.map !(v => v.y).sum / goalN : world.height / 2.0;
 
                 // .. and add delayed moves to select and move our vehicles.
                 if (!isNaN (teamX) && !isNaN (teamY))
