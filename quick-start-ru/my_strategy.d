@@ -1,6 +1,6 @@
-// This is the ``Quick Start'' strategy: http://russianaicup.ru/p/quick.
-// To use it, make a backup copy of your file
-// ../my_strategy.d, and then copy this file there.
+// Это стратегия из раздела <<Быстрый старт>>: http://russianaicup.ru/p/quick.
+// Чтобы использовать её, сделайте резервную копию своего файла
+// ../my_strategy.d, а затем скопируйте этот файл на его место.
 module my_strategy;
 
 import std.algorithm;
@@ -17,13 +17,13 @@ import strategy;
 final class MyStrategy : Strategy
 {
     /**
-     * Main strategy method, controlling the vehicles.
-     * The game engine calls this method once each time tick.
+     * Основной метод стратегии, осуществляющий управление армией. Вызывается каждый тик.
      *
-     * @param me    the owner player of this strategy.
-     * @param world the current world snapshot.
-     * @param game  many game constants.
-     * @param move  the object that encapsulates all strategy instructions.
+     * Params:
+     *   me    = Информация о вашем игроке.
+     *   world = Текущее состояние мира.
+     *   game  = Различные игровые константы.
+     *   move  = Результатом работы метода является изменение полей данного объекта.
      */
     void move (immutable Player me, immutable World world,
         immutable Game game, Move move)
@@ -58,10 +58,31 @@ private:
     Move [] delayedMoves;
 
     /**
-     * Initialize our strategy.
+     * Список целей для каждого типа техники, упорядоченных по убыванию урона по ним.
+     */
+    static immutable VehicleType [] [VehicleType] preferredTargetTypesByVehicleType;
+
+    static this ()
+    {
+        with (VehicleType)
+        {
+            immutable VehicleType [] emptyList;
+            preferredTargetTypesByVehicleType = [
+                unknown    : emptyList,
+                arrv       : emptyList,
+                fighter    : [helicopter, fighter].idup,
+                helicopter : [tank, arrv, helicopter, ifv, fighter].idup,
+                ifv        : [helicopter, arrv, ifv, fighter, tank].idup,
+                tank       : [ifv, arrv, tank, fighter, helicopter].idup,
+            ];
+        }
+    }
+
+    /**
+     * Инциализируем стратегию.
      * $(BR)
-     * Usually you can use a constructor, but in this case we want to initialize the generator of random numbers
-     * with a value obtained from the game engine.
+     * Для этих целей обычно можно использовать конструктор, однако в данном случае мы хотим инициализировать генератор
+     * случайных чисел значением, полученным от симулятора игры.
      */
     void initializeStrategy (immutable World world, immutable Game game)
     {
@@ -75,7 +96,8 @@ private:
     }
 
     /**
-     * Save all input data in the strategy fields for simpler access and actualize vehicle data.
+     * Сохраняем все входные данные в полях класса для упрощения доступа к ним, а также актуализируем сведения о каждой
+     * технике и времени последнего изменения её состояния.
      */
     void initializeTick (immutable Player me, immutable World world,
         immutable Game game, Move move)
@@ -110,9 +132,9 @@ private:
     }
 
     /**
-     * Take delayed move from queue and execute.
+     * Достаём отложенное действие из очереди и выполняем его.
      *
-     * Returns: `true` if and only if a delayed move has been found and executed.
+     * Returns: Возвращает `true`, если и только если отложенное действие было найдено и выполнено.
      */
     bool executeDelayedMove ()
     {
@@ -130,40 +152,42 @@ private:
     }
 
     /**
-     * The core logic of our strategy.
+     * Основная логика нашей стратегии.
      */
     void move ()
     {
         auto vehicles = vehicleById.byValue ();
-        // Every 300 ticks ...
-        if (world.tickIndex % 300 == 0)
+        // Каждые 180 тиков ...
+        if (world.tickIndex % 180 == 0)
         {
-            // ... for each vehicle type ...
+            auto enemies = vehicles.filter !(v => v.playerId != me.id);
+            // ... для каждого типа техники ...
             foreach (teamType; EnumMembers !(VehicleType))
             {
-                auto goalType = getPreferredTargetType (teamType);
-
-                // ... if it can attack ...
-                if (goalType == VehicleType.unknown)
+                // ... если этот тип может атаковать ...
+                auto goalTypes = preferredTargetTypesByVehicleType[teamType]
+                    .find !(t => enemies.any !(e => e.type == t));
+                if (goalTypes.empty)
                 {
                     continue;
                 }
+                auto goalType = goalTypes.front;
 
-                // ... find center of our formation ...
+                // ... получаем центр формации ...
                 auto teamList = vehicles.filter !(v =>
                     v.playerId == me.id && v.type == teamType);
                 auto teamN = teamList.walkLength;
                 double teamX = teamN ? teamList.map !(v => v.x).sum / teamN : double.nan;
                 double teamY = teamN ? teamList.map !(v => v.y).sum / teamN : double.nan;
 
-                // ... find center of enemy formation or center of the world ...
+                // ... получаем центр формации противника или центр мира ...
                 auto goalList = vehicles.filter !(v =>
                     v.playerId != me.id && v.type == goalType);
                 auto goalN = goalList.walkLength;
                 double goalX = goalN ? goalList.map !(v => v.x).sum / goalN : double.nan;
                 double goalY = goalN ? goalList.map !(v => v.y).sum / goalN : double.nan;
 
-                // .. and add delayed moves to select and move our vehicles.
+                // .. и добавляем в очередь отложенные действия для выделения и перемещения техники.
                 if (!isNaN (teamX) && !isNaN (teamY))
                 {
                     auto move1 = new Move ();
@@ -181,14 +205,14 @@ private:
                 }
             }
 
-            // Also find center of our ARRV formation ...
+            // Также находим центр формации наших БРЭМ ...
             auto arrvList = vehicles.filter !(v =>
                 v.playerId == me.id && v.type == VehicleType.arrv);
             auto arrvN = arrvList.walkLength;
             double arrvX = arrvN ? arrvList.map !(v => v.x).sum / arrvN : double.nan;
             double arrvY = arrvN ? arrvList.map !(v => v.y).sum / arrvN : double.nan;
 
-            // .. and send it to the center of the world.
+            // .. и отправляем их в центр мира.
             if (!isNaN (arrvX) && !isNaN (arrvY))
             {
                 auto move1 = new Move ();
@@ -208,17 +232,17 @@ private:
             return;
         }
 
-        // If all our vehicles are stuck for 60 ticks ...
+        // Если ни один наш юнит не мог двигаться в течение 60 тиков ...
         if (vehicles.filter !(v => v.playerId == me.id)
             .all !(v => world.tickIndex - updateTickByVehicleId[v.id] > 60))
         {
-            // ... find center of our formation ...
+            // ... находим центр нашей формации ...
             auto oursList = vehicles.filter !(v => v.playerId == me.id);
             auto oursN = oursList.walkLength;
             double oursX = oursN ? oursList.map !(v => v.x).sum / oursN : double.nan;
             double oursY = oursN ? oursList.map !(v => v.y).sum / oursN : double.nan;
 
-            // ... and rotate it.
+            // ... и поворачиваем её на случайный угол.
             if (!isNaN (oursX) && !isNaN (oursY))
             {
                 auto move1 = new Move ();
@@ -227,35 +251,6 @@ private:
                 move1.y = oursY;
                 move1.angle = uniform (0, 2, random) ? +PI : -PI;
                 delayedMoves ~= move1;
-            }
-        }
-    }
-
-    /**
-     * Find a vehicle type, that specified vehicle type is strong against.
-     *
-     * Params:
-     *   vehicleType = vehicle type.
-     * Returns: target vehicle type.
-     */
-    static auto getPreferredTargetType (VehicleType vehicleType)
-    {
-        with (VehicleType)
-        {
-            final switch (vehicleType)
-            {
-                case unknown:
-                    return unknown;
-                case fighter:
-                    return helicopter;
-                case helicopter:
-                    return tank;
-                case ifv:
-                    return helicopter;
-                case tank:
-                    return ifv;
-                case arrv:
-                    return unknown;
             }
         }
     }

@@ -59,6 +59,27 @@ private:
     Move [] delayedMoves;
 
     /**
+     * Список целей для каждого типа техники, упорядоченных по убыванию урона по ним.
+     */
+    static immutable VehicleType [] [VehicleType] preferredTargetTypesByVehicleType;
+
+    static this ()
+    {
+        with (VehicleType)
+        {
+            immutable VehicleType [] emptyList;
+            preferredTargetTypesByVehicleType = [
+                unknown    : emptyList,
+                arrv       : emptyList,
+                fighter    : [helicopter, fighter].idup,
+                helicopter : [tank, arrv, helicopter, ifv, fighter].idup,
+                ifv        : [helicopter, arrv, ifv, fighter, tank].idup,
+                tank       : [ifv, arrv, tank, fighter, helicopter].idup,
+            ];
+        }
+    }
+
+    /**
      * Initialize our strategy.
      * $(BR)
      * Usually you can use a constructor, but in this case we want to initialize the generator of random numbers
@@ -136,19 +157,21 @@ private:
     void move ()
     {
         auto vehicles = vehicleById.byValue ();
-        // Every 300 ticks ...
-        if (world.tickIndex % 300 == 0)
+        // Every 180 ticks ...
+        if (world.tickIndex % 180 == 0)
         {
+            auto enemies = vehicles.filter !(v => v.playerId != me.id);
             // ... for each vehicle type ...
             foreach (teamType; EnumMembers !(VehicleType))
             {
-                auto goalType = getPreferredTargetType (teamType);
-
                 // ... if it can attack ...
-                if (goalType == VehicleType.unknown)
+                auto goalTypes = preferredTargetTypesByVehicleType[teamType]
+                    .find !(t => enemies.any !(e => e.type == t));
+                if (goalTypes.empty)
                 {
                     continue;
                 }
+                auto goalType = goalTypes.front;
 
                 // ... find center of our formation ...
                 auto teamList = vehicles.filter !(v =>
