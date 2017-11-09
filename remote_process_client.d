@@ -169,7 +169,6 @@ private:
 
         static if (is (Unqual !(T) == World))
         { // custom read: World has caching for some member arrays
-//            pragma (msg, ReadContents !(T));
             mixin (ReadContents !(T)
                 .replace ("auto terrainByCellXY = " ~
                 "read !(immutable(TerrainType[][])) ();\n",

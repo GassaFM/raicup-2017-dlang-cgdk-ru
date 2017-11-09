@@ -28,10 +28,9 @@ void main (string [] args)
     client.writeToken (token);
     client.writeProtocolVersion ();
     int teamSize = client.readTeamSize ();
-    debug {writefln ("Team size: %d", teamSize);}
     auto game = client.readGameContextMessage ();
 
-    auto strategy = new MyStrategy ();
+    Strategy strategy = new MyStrategy ();
 
     while (true)
     {
