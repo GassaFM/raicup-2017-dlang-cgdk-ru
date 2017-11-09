@@ -254,33 +254,4 @@ private:
             }
         }
     }
-
-    /**
-     * Find a vehicle type, that specified vehicle type is strong against.
-     *
-     * Params:
-     *   vehicleType = vehicle type.
-     * Returns: target vehicle type.
-     */
-    static auto getPreferredTargetType (VehicleType vehicleType)
-    {
-        with (VehicleType)
-        {
-            final switch (vehicleType)
-            {
-                case unknown:
-                    return unknown;
-                case fighter:
-                    return helicopter;
-                case helicopter:
-                    return tank;
-                case ifv:
-                    return helicopter;
-                case tank:
-                    return ifv;
-                case arrv:
-                    return unknown;
-            }
-        }
-    }
 }
