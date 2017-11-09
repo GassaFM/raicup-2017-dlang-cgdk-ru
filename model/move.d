@@ -14,7 +14,7 @@ nothrow pure @safe @nogc:
     /**
      * Устанавливает действие игрока.
      */
-    ActionType action = ActionType.unknown;
+    ActionTypeOrNull action;
     /**
      * Устанавливает группу юнитов для различных действий.
      * $(BR)
@@ -141,7 +141,7 @@ nothrow pure @safe @nogc:
      * Завод будет настроен на производство техники данного типа. При этом, прогресс производства будет обнулён.
      * Если данный параметр не установлен, то производство техники на заводе будет остановлено.
      */
-    VehicleType vehicleType = VehicleType.unknown;
+    VehicleTypeOrNull vehicleType;
     /**
      * Устанавливает идентификатор сооружения.
      * $(BR)

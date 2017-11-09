@@ -613,16 +613,16 @@ class Enum
 	string [] write ()
 	{
 		string [] res;
+		res ~= "import std.typecons;";
+		res ~= "";
 		res ~= headComment;
 		res ~= headLine;
 		res ~= "{";
-		res ~= "    /**";
-		res ~= "     * Default value.";
-		res ~= "     */";
-		res ~= "    unknown = -1,";
-		res ~= "";
 		res ~= lines;
 		res ~= "}";
+		res ~= "";
+		res ~= "alias " ~ name ~ "OrNull = Nullable !(" ~
+		    name ~ ", cast (" ~ name ~ ") (-1));";
 		return res;
 	}
 }

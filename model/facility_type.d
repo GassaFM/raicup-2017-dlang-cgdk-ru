@@ -1,15 +1,12 @@
 module model.facility_type;
 
+import std.typecons;
+
 /**
  * Тип сооружения.
  */
 enum FacilityType : byte
 {
-    /**
-     * Default value.
-     */
-    unknown = -1,
-
     /**
      * Центр управления. Увеличивает возможное количество действий игрока на
      * `game.additionalActionCountPerControlCenter` за `game.actionDetectionInterval` игровых тиков.
@@ -21,3 +18,5 @@ enum FacilityType : byte
      */
     vehicleFactory
 }
+
+alias FacilityTypeOrNull = Nullable !(FacilityType, cast (FacilityType) (-1));

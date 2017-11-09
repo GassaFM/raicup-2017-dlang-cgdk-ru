@@ -69,7 +69,6 @@ private:
         {
             immutable VehicleType [] emptyList;
             preferredTargetTypesByVehicleType = [
-                unknown    : emptyList,
                 arrv       : emptyList,
                 fighter    : [helicopter, fighter].idup,
                 helicopter : [tank, arrv, helicopter, ifv, fighter].idup,

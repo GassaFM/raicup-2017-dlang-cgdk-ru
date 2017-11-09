@@ -5,7 +5,7 @@
 17c17
 <     ActionType action;
 ---
->     ActionType action = ActionType.unknown;
+>     ActionTypeOrNull action;
 31c31
 <     int group;
 ---
@@ -49,4 +49,4 @@
 144c144
 <     VehicleType vehicleType;
 ---
->     VehicleType vehicleType = VehicleType.unknown;
+>     VehicleTypeOrNull vehicleType;

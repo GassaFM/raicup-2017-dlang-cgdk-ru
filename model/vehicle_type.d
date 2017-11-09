@@ -1,15 +1,12 @@
 module model.vehicle_type;
 
+import std.typecons;
+
 /**
  * Тип техники.
  */
 enum VehicleType : byte
 {
-    /**
-     * Default value.
-     */
-    unknown = -1,
-
     /**
      * Бронированная ремонтно-эвакуационная машина. Наземный юнит.
      * Постепенно восстанавливает прочность находящейся поблизости неподвижной техники.
@@ -36,3 +33,5 @@ enum VehicleType : byte
      */
     tank
 }
+
+alias VehicleTypeOrNull = Nullable !(VehicleType, cast (VehicleType) (-1));

@@ -3,6 +3,7 @@ module runner;
 import std.stdio;
 
 import remote_process_client;
+import strategy;
 import my_strategy;
 
 import model.game;
