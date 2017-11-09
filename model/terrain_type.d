@@ -1,7 +1,5 @@
 module model.terrain_type;
 
-import std.typecons;
-
 /**
  * Тип местности.
  */
@@ -23,4 +21,3 @@ enum TerrainType : byte
     forest
 }
 
-alias TerrainTypeOrNull = Nullable !(TerrainType, cast (TerrainType) (-1));

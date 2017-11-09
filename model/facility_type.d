@@ -1,7 +1,5 @@
 module model.facility_type;
 
-import std.typecons;
-
 /**
  * Тип сооружения.
  */
@@ -19,4 +17,3 @@ enum FacilityType : byte
     vehicleFactory
 }
 
-alias FacilityTypeOrNull = Nullable !(FacilityType, cast (FacilityType) (-1));

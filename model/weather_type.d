@@ -1,7 +1,5 @@
 module model.weather_type;
 
-import std.typecons;
-
 /**
  * Тип погоды.
  */
@@ -23,4 +21,3 @@ enum WeatherType : byte
     rain
 }
 
-alias WeatherTypeOrNull = Nullable !(WeatherType, cast (WeatherType) (-1));

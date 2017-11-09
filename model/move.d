@@ -1,4 +1,5 @@
 module model.move;
+import std.typecons;
 
 import model.vehicle_type;
 import model.action_type;
@@ -14,7 +15,7 @@ nothrow pure @safe @nogc:
     /**
      * Устанавливает действие игрока.
      */
-    ActionTypeOrNull action;
+    Nullable !(ActionType, cast (ActionType) (-1)) action;
     /**
      * Устанавливает группу юнитов для различных действий.
      * $(BR)
@@ -141,7 +142,7 @@ nothrow pure @safe @nogc:
      * Завод будет настроен на производство техники данного типа. При этом, прогресс производства будет обнулён.
      * Если данный параметр не установлен, то производство техники на заводе будет остановлено.
      */
-    VehicleTypeOrNull vehicleType;
+    Nullable !(VehicleType, cast (VehicleType) (-1)) vehicleType;
     /**
      * Устанавливает идентификатор сооружения.
      * $(BR)

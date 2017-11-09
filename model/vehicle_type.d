@@ -1,7 +1,5 @@
 module model.vehicle_type;
 
-import std.typecons;
-
 /**
  * Тип техники.
  */
@@ -34,4 +32,3 @@ enum VehicleType : byte
     tank
 }
 
-alias VehicleTypeOrNull = Nullable !(VehicleType, cast (VehicleType) (-1));

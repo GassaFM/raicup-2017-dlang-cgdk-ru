@@ -2,8 +2,6 @@ module model.action_type;
 
 import model.facility_type;
 
-import std.typecons;
-
 /**
  * Возможные действия игрока.
  * $(BR)
@@ -74,4 +72,3 @@ enum ActionType : byte
     setupVehicleProduction
 }
 
-alias ActionTypeOrNull = Nullable !(ActionType, cast (ActionType) (-1));
