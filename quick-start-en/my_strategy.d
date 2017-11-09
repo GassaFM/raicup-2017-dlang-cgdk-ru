@@ -245,11 +245,17 @@ private:
             if (!isNaN (oursX) && !isNaN (oursY))
             {
                 auto move1 = new Move ();
-                move1.action = ActionType.rotate;
-                move1.x = oursX;
-                move1.y = oursY;
-                move1.angle = uniform (0, 2, random) ? +PI : -PI;
+                move1.action = ActionType.clearAndSelect;
+                move1.right = world.width;
+                move1.bottom = world.height;
                 delayedMoves ~= move1;
+
+                auto move2 = new Move ();
+                move2.action = ActionType.rotate;
+                move2.x = oursX;
+                move2.y = oursY;
+                move2.angle = uniform (0, 2, random) ? +PI : -PI;
+                delayedMoves ~= move2;
             }
         }
     }

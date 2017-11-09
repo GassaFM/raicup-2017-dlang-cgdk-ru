@@ -40,6 +40,10 @@
 <     double angle;
 ---
 >     double angle = 0.0;
+126c127
+<     double factor;
+---
+>     double factor = 0.0;
 137c138
 <     double maxSpeed;
 ---
