@@ -107,7 +107,7 @@ public:
     void writeProtocolVersion ()
     {
         write (MessageType.protocolVersion);
-        write !(int) (1);
+        write !(int) (2);
     }
 
     auto readGameContextMessage ()
@@ -254,7 +254,7 @@ private:
 
         static if (is (Unqual !(T) == Move))
         { // custom write: Move does not have an all-fields constructor
-            write !(ActionType) (t.action);
+            write !(byte) (t.action);
             write !(int) (t.group);
             write !(double) (t.left);
             write !(double) (t.top);
@@ -263,9 +263,10 @@ private:
             write !(double) (t.x);
             write !(double) (t.y);
             write !(double) (t.angle);
+            write !(double) (t.factor);
             write !(double) (t.maxSpeed);
             write !(double) (t.maxAngularSpeed);
-            write !(VehicleType) (t.vehicleType);
+            write !(byte) (t.vehicleType);
             write !(long) (t.facilityId);
         }
         else

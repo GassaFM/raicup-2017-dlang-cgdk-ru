@@ -760,9 +760,12 @@
  Является обязательным параметром для действия <code class="code">ActionType.rotate</code> и задаёт абсциссу точки, относительно
  которой необходимо совершить поворот.
  <br>
+ Является обязательным параметром для действия <code class="code">ActionType.scale</code> и задаёт абсциссу точки, относительно
+ которой необходимо совершить масштабирование.
+ <br>
  Корректными значениями для действия <code class="code">ActionType.move</code> являются вещественные числа от
- <code class="code">-game.worldWidth</code> до <code class="code">game.worldWidth</code> включительно. Корректными значениями для действия
- <code class="code">ActionType.rotate</code> являются вещественные числа от <code class="code">-game.worldWidth</code> до
+ <code class="code">-game.worldWidth</code> до <code class="code">game.worldWidth</code> включительно. Корректными значениями для действий
+ <code class="code">ActionType.rotate</code> и <code class="code">ActionType.scale</code> являются вещественные числа от <code class="code">-game.worldWidth</code> до
  <code class="code">2.0 * game.worldWidth</code> включительно.
   </p>
 </div>
@@ -803,9 +806,12 @@
  Является обязательным параметром для действия <code class="code">ActionType.rotate</code> и задаёт ординату точки, относительно
  которой необходимо совершить поворот.
  <br>
+ Является обязательным параметром для действия <code class="code">ActionType.scale</code> и задаёт ординату точки, относительно
+ которой необходимо совершить масштабирование.
+ <br>
  Корректными значениями для действия <code class="code">ActionType.move</code> являются вещественные числа от
- <code class="code">-game.worldHeight</code> до <code class="code">game.worldHeight</code> включительно. Корректными значениями для действия
- <code class="code">ActionType.rotate</code> являются вещественные числа от <code class="code">-game.worldHeight</code> до
+ <code class="code">-game.worldHeight</code> до <code class="code">game.worldHeight</code> включительно. Корректными значениями для действий
+ <code class="code">ActionType.rotate</code> и <code class="code">ActionType.scale</code> являются вещественные числа от <code class="code">-game.worldHeight</code> до
  <code class="code">2.0 * game.worldHeight</code> включительно.
   </p>
 </div>
@@ -854,6 +860,44 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Move.factor" id="Move.factor"><code class="code">factor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Move.factor"></span>double <code class="code">factor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Задаёт коэффициент масштабирования.
+ <br>
+ Является обязательным параметром для действия <code class="code">ActionType.scale</code> и задаёт коэффициент масштабирования
+ формации юнитов относительно точки (<code class="code">x</code>, <code class="code">y</code>). При значениях коэффициента больше 1.0 происходит
+ расширение формации, при значениях меньше 1.0 --- сжатие.
+ <br>
+ Корректными значениями являются вещественные числа от <code class="code">0.1</code> до <code class="code">10.0</code> включительно.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Move.maxSpeed" id="Move.maxSpeed"><code class="code">maxSpeed</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -877,9 +921,9 @@
   <p class="para">
     Устанавливает абсолютное ограничение линейной скорости.
  <br>
- Является опциональным параметром для действий <code class="code">ActionType.move</code> и <code class="code">ActionType.rotate</code>. Если для
- действия <code class="code">ActionType.rotate</code> установлено ограничение скорости поворота, то этот параметр будет
- проигнорирован.
+ Является опциональным параметром для действий <code class="code">ActionType.move</code>, <code class="code">ActionType.rotate</code> и
+ <code class="code">ActionType.scale</code>. Если для действия <code class="code">ActionType.rotate</code> установлено ограничение скорости поворота,
+ то этот параметр будет проигнорирован.
  <br>
  Корректными значениями являются вещественные неотрицательные числа. При этом, <code class="code">0.0</code> означает, что
  ограничение отсутствует.
