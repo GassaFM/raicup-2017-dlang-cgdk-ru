@@ -763,10 +763,15 @@
  Является обязательным параметром для действия <code class="code">ActionType.scale</code> и задаёт абсциссу точки, относительно
  которой необходимо совершить масштабирование.
  <br>
+ Является обязательным параметром для действия <code class="code">ActionType.tacticalNuclearStrike</code> и задаёт абсциссу цели
+ тактического ядерного удара.
+ <br>
  Корректными значениями для действия <code class="code">ActionType.move</code> являются вещественные числа от
  <code class="code">-game.worldWidth</code> до <code class="code">game.worldWidth</code> включительно. Корректными значениями для действий
  <code class="code">ActionType.rotate</code> и <code class="code">ActionType.scale</code> являются вещественные числа от <code class="code">-game.worldWidth</code> до
- <code class="code">2.0 * game.worldWidth</code> включительно.
+ <code class="code">2.0 * game.worldWidth</code> включительно. Корректными значениями для действия
+ <code class="code">ActionType.tacticalNuclearStrike</code> являются вещественные числа от <code class="code">0.0</code> до <code class="code">game.worldWidth</code>
+ включительно.
   </p>
 </div>
 
@@ -809,10 +814,15 @@
  Является обязательным параметром для действия <code class="code">ActionType.scale</code> и задаёт ординату точки, относительно
  которой необходимо совершить масштабирование.
  <br>
+ Является обязательным параметром для действия <code class="code">ActionType.tacticalNuclearStrike</code> и задаёт ординату цели
+ тактического ядерного удара.
+ <br>
  Корректными значениями для действия <code class="code">ActionType.move</code> являются вещественные числа от
  <code class="code">-game.worldHeight</code> до <code class="code">game.worldHeight</code> включительно. Корректными значениями для действий
  <code class="code">ActionType.rotate</code> и <code class="code">ActionType.scale</code> являются вещественные числа от <code class="code">-game.worldHeight</code> до
- <code class="code">2.0 * game.worldHeight</code> включительно.
+ <code class="code">2.0 * game.worldHeight</code> включительно. Корректными значениями для действия
+ <code class="code">ActionType.tacticalNuclearStrike</code> являются вещественные числа от <code class="code">0.0</code> до <code class="code">game.worldHeight</code>
+ включительно.
   </p>
 </div>
 
@@ -1042,6 +1052,42 @@
  Является обязательным параметром для действия <code class="code">ActionType.setupVehicleProduction</code>.
  Если сооружение с данным идентификатором отсутствует в игре, не является заводом по производству техники
  (<code class="code">FacilityType.vehicleFactory</code>) или принадлежит другому игроку, то действие будет проигнорировано.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Move.vehicleId" id="Move.vehicleId"><code class="code">vehicleId</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Move.vehicleId"></span>long <code class="code">vehicleId</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Устанавливает идентификатор техники.
+ <br>
+ Является обязательным параметром для действия <code class="code">ActionType.tacticalNuclearStrike</code>. Если юнит с данным
+ идентификатором отсутствует в игре, принадлежит другому игроку или цель удара находится вне зоны видимости этого
+ юнита, то действие будет проигнорировано.
   </p>
 </div>
 

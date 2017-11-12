@@ -107,7 +107,7 @@ public:
     void writeProtocolVersion ()
     {
         write (MessageType.protocolVersion);
-        write !(int) (2);
+        write !(int) (3);
     }
 
     auto readGameContextMessage ()
@@ -254,20 +254,21 @@ private:
 
         static if (is (Unqual !(T) == Move))
         { // custom write: Move does not have an all-fields constructor
-            write !(byte) (t.action);
-            write !(int) (t.group);
-            write !(double) (t.left);
-            write !(double) (t.top);
-            write !(double) (t.right);
-            write !(double) (t.bottom);
-            write !(double) (t.x);
-            write !(double) (t.y);
-            write !(double) (t.angle);
-            write !(double) (t.factor);
-            write !(double) (t.maxSpeed);
-            write !(double) (t.maxAngularSpeed);
-            write !(byte) (t.vehicleType);
-            write !(long) (t.facilityId);
+            write (t.action);
+            write (t.group);
+            write (t.left);
+            write (t.top);
+            write (t.right);
+            write (t.bottom);
+            write (t.x);
+            write (t.y);
+            write (t.angle);
+            write (t.factor);
+            write (t.maxSpeed);
+            write (t.maxAngularSpeed);
+            write (t.vehicleType);
+            write (t.facilityId);
+            write (t.vehicleId);
         }
         else
         { // generic write for model classes
@@ -338,6 +339,26 @@ private:
         }
     }
 
+    auto write (T) (T value)
+        if (is (T : Nullable !(Args), Args...))
+    {
+        static if (is (T : Nullable !(E, Args), E, Args...))
+        {
+            if (value.isNull)
+            {
+                write !(E) (cast (E) (-1));
+            }
+            else
+            {
+                write !(E) (value);
+            }
+        }
+        else
+        {
+            static assert (false);
+        }
+    }
+
     auto read (T) ()
         if (!is (T == class))
     {
@@ -345,7 +366,7 @@ private:
     }
 
     void write (T) (T value)
-        if (!is (T == class))
+        if (!is (T == class) && !is (T == Nullable !(Args), Args...))
     {
         writeBytes (nativeToLittleEndian (value));
     }

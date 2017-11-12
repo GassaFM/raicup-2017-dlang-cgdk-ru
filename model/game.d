@@ -1,6 +1,7 @@
 module model.game;
 
 import model.weather_type;
+import model.action_type;
 import model.terrain_type;
 import model.facility_type;
 
@@ -399,6 +400,28 @@ nothrow pure @safe @nogc:
      * Returns: Возвращает высоту сооружения.
      */
     double facilityHeight;
+    /**
+     * Returns: Возвращает минимально возможный интервал между двумя последовательными тактическими ядерными ударами
+     * (`ActionType.tacticalNuclearStrike`).
+     */
+    int baseTacticalNuclearStrikeCooldown;
+    /**
+     * Returns: Возвращает уменьшение интервала между тактическими ядерными ударами за каждый захваченный центр
+     * управления (`FacilityType.controlCenter`).
+     */
+    int tacticalNuclearStrikeCooldownDecreasePerControlCenter;
+    /**
+     * Returns: Возвращает урон тактического ядерного удара в центре взрыва.
+     */
+    double maxTacticalNuclearStrikeDamage;
+    /**
+     * Returns: Возвращает радиус взрыва тактического ядерного удара.
+     */
+    double tacticalNuclearStrikeRadius;
+    /**
+     * Returns: Возвращает задержку между запросом нанесения тактического ядерного удара и собственно самим нанесением.
+     */
+    int tacticalNuclearStrikeDelay;
 
     this (
         long randomSeed,
@@ -489,7 +512,12 @@ nothrow pure @safe @nogc:
         double maxFacilityCapturePoints,
         double facilityCapturePointsPerVehiclePerTick,
         double facilityWidth,
-        double facilityHeight)
+        double facilityHeight,
+        int baseTacticalNuclearStrikeCooldown,
+        int tacticalNuclearStrikeCooldownDecreasePerControlCenter,
+        double maxTacticalNuclearStrikeDamage,
+        double tacticalNuclearStrikeRadius,
+        int tacticalNuclearStrikeDelay)
     {
         this.randomSeed = randomSeed;
         this.tickCount = tickCount;
@@ -580,5 +608,10 @@ nothrow pure @safe @nogc:
         this.facilityCapturePointsPerVehiclePerTick = facilityCapturePointsPerVehiclePerTick;
         this.facilityWidth = facilityWidth;
         this.facilityHeight = facilityHeight;
+        this.baseTacticalNuclearStrikeCooldown = baseTacticalNuclearStrikeCooldown;
+        this.tacticalNuclearStrikeCooldownDecreasePerControlCenter = tacticalNuclearStrikeCooldownDecreasePerControlCenter;
+        this.maxTacticalNuclearStrikeDamage = maxTacticalNuclearStrikeDamage;
+        this.tacticalNuclearStrikeRadius = tacticalNuclearStrikeRadius;
+        this.tacticalNuclearStrikeDelay = tacticalNuclearStrikeDelay;
     }
 }

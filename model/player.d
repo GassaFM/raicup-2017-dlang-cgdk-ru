@@ -29,18 +29,49 @@ nothrow pure @safe @nogc:
      * Если значение равно `0`, игрок может совершить действие в данный тик.
      */
     int remainingActionCooldownTicks;
+    /**
+     * Returns: Возвращает количество тиков, оставшееся до следующего тактического ядерного удара.
+     * Если значение равно `0`, игрок может запросить удар в данный тик.
+     */
+    int remainingNuclearStrikeCooldownTicks;
+    /**
+     * Returns: Возвращает идентификатор техники, осуществляющей наведение ядерного удара на цель или `-1`.
+     */
+    long nextNuclearStrikeVehicleId;
+    /**
+     * Returns: Возвращает тик нанесения следующего ядерного удара или `-1`.
+     */
+    int nextNuclearStrikeTickIndex;
+    /**
+     * Returns: Возвращает абсциссу цели следующего ядерного удара или `-1.0`.
+     */
+    double nextNuclearStrikeX;
+    /**
+     * Returns: Возвращает ординату цели следующего ядерного удара или `-1.0`.
+     */
+    double nextNuclearStrikeY;
 
     this (
         long id,
         bool me,
         bool strategyCrashed,
         int score,
-        int remainingActionCooldownTicks)
+        int remainingActionCooldownTicks,
+        int remainingNuclearStrikeCooldownTicks,
+        long nextNuclearStrikeVehicleId,
+        int nextNuclearStrikeTickIndex,
+        double nextNuclearStrikeX,
+        double nextNuclearStrikeY)
     {
         this.id = id;
         this.me = me;
         this.strategyCrashed = strategyCrashed;
         this.score = score;
         this.remainingActionCooldownTicks = remainingActionCooldownTicks;
+        this.remainingNuclearStrikeCooldownTicks = remainingNuclearStrikeCooldownTicks;
+        this.nextNuclearStrikeVehicleId = nextNuclearStrikeVehicleId;
+        this.nextNuclearStrikeTickIndex = nextNuclearStrikeTickIndex;
+        this.nextNuclearStrikeX = nextNuclearStrikeX;
+        this.nextNuclearStrikeY = nextNuclearStrikeY;
     }
 }

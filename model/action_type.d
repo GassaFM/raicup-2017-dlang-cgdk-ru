@@ -74,6 +74,11 @@ enum ActionType : byte
     /**
      * Настроить производство нужного типа техники на заводе (`FacilityType.vehicleFactory`).
      */
-    setupVehicleProduction
+    setupVehicleProduction,
+
+    /**
+     * Запросить тактический ядерный удар.
+     */
+    tacticalNuclearStrike
 }
 

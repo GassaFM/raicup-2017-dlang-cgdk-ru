@@ -28,31 +28,31 @@
 <     double bottom;
 ---
 >     double bottom = 0.0;
-89c90
+94c95
 <     double x;
 ---
 >     double x = 0.0;
-107c108
+117c118
 <     double y;
 ---
 >     double y = 0.0;
-116c117
+126c127
 <     double angle;
 ---
 >     double angle = 0.0;
-126c127
+136c137
 <     double factor;
 ---
 >     double factor = 0.0;
-137c138
+147c148
 <     double maxSpeed;
 ---
 >     double maxSpeed = 0.0;
-147c148
+157c158
 <     double maxAngularSpeed;
 ---
 >     double maxAngularSpeed = 0.0;
-160c161
+170c171
 <     VehicleType vehicleType;
 ---
 >     Nullable !(VehicleType, cast (VehicleType) (-1)) vehicleType;
